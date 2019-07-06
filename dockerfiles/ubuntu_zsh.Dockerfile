@@ -1,3 +1,9 @@
+# This dockerfile (and also all dockerfiles in `tf-docker/dockerfiles` repo) should
+# be used to build image under the `tf-docker` (`context`) folder by issuing the
+# following command in the `tf-docker` folder:
+#
+#   docker image build -t <your-image-tag> -f dockerfiles/ubuntu_zsh.Dockerfile .
+
 FROM ubuntu:16.04
 
 # Install core requirements for `oh-my-zsh`
