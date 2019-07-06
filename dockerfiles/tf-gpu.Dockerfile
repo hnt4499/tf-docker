@@ -22,6 +22,14 @@
 # This file was adapted from
 #     https://raw.githubusercontent.com/tensorflow/tensorflow/master/tensorflow/tools/dockerfiles/dockerfiles/gpu.Dockerfile
 # and modified for personal use.
+#
+# ============================================================================
+#
+# This dockerfile (and also all dockerfiles in `tf-docker/dockerfiles` repo) should
+# be used to build image under the `tf-docker` (`context`) folder by issuing the
+# following command in the `tf-docker` folder:
+#
+#   docker image build -t <your-image-tag> -f dockerfiles/tf-gpu.Dockerfile .
 
 ARG UBUNTU_VERSION=16.04
 
@@ -94,5 +102,5 @@ ARG TF_PACKAGE=tensorflow-gpu
 ARG TF_PACKAGE_VERSION=
 RUN ${PIP} install ${TF_PACKAGE}${TF_PACKAGE_VERSION:+==${TF_PACKAGE_VERSION}}
 
-COPY bashrc /etc/bash.bashrc
+COPY tensorflow/bashrc /etc/bash.bashrc
 RUN chmod a+rwx /etc/bash.bashrc
