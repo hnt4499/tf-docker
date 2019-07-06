@@ -32,7 +32,8 @@
 set -e
 
 # Default settings
-ZSH=${ZSH:-~/.oh-my-zsh}
+ZSH=${ZSH:-/.oh-my-zsh}
+# Deprecated variables
 REPO=${REPO:-hnt4499/oh-my-zsh}
 REMOTE=${REMOTE:-https://github.com/${REPO}.git}
 BRANCH=${BRANCH:-master}
@@ -70,6 +71,8 @@ setup_color() {
 }
 
 setup_ohmyzsh() {
+	# NOTE: This function has been modified for personal use.
+	#
 	# Prevent the cloned repository from having insecure permissions. Failing to do
 	# so causes compinit() calls to fail with "command not found: compdef" errors
 	# for users with insecure umasks (e.g., "002", allowing group writability). Note
@@ -77,7 +80,7 @@ setup_ohmyzsh() {
 	# precedence over umasks except for filesystems mounted with option "noacl".
 	umask g-w,o-w
 
-	echo "${BLUE}Cloning Oh My Zsh...${RESET}"
+	echo "${BLUE}Setting up Oh My Zsh...${RESET}"
 
 	command_exists git || {
 		error "git is not installed"
@@ -90,10 +93,7 @@ setup_ohmyzsh() {
 		exit 1
 	fi
 
-	git clone --depth=1 --branch "$BRANCH" "$REMOTE" "$ZSH" || {
-		error "git clone of oh-my-zsh repo failed"
-		exit 1
-	}
+	cp -r /tmp/.oh-my-zsh /.oh-my-zsh
 
 	echo
 }
