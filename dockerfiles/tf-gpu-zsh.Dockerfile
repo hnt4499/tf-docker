@@ -4,7 +4,19 @@
 #
 #   docker image build -t <your-image-tag> -f dockerfiles/ubuntu_zsh.Dockerfile .
 
-FROM hnt4499/tf:latest-gpu-16.04
+FROM hnt4499/tf:16.04
+
+# Using $HOME environment variable ensures that oh-my-zsh
+# will be installed properly for specific user. For example, build a image with
+#
+#   docker image build -u $(id -u):$(id -g) --build-arg home_dir=$HOME [args] .
+#
+# allowing oh-my-zsh shell to work properly with user $(id -u)
+
+ARG home_dir=${home_dir:-/root}
+ENV HOME=$home_dir
+# Ensure that $HOME folder exists
+WORKDIR $HOME
 
 # Install core requirements for `oh-my-zsh`
 # The use of package `software-properties-common` is to 
@@ -37,6 +49,8 @@ RUN add-apt-repository ppa:jonathonf/vim \
     && curl -sLf https://spacevim.org/install.sh | bash \
     && sh vimproc.sh
 
+# Install additional packages
+RUN apt-get install -y --no-install-recommends sudo
 
 WORKDIR /
 # Clean up

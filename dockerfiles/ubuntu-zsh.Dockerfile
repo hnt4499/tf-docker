@@ -6,6 +6,10 @@
 
 FROM ubuntu:16.04
 
+ARG home_dir=
+ENV HOME=$home_dir
+
+WORKDIR $HOME
 # Install core requirements for `oh-my-zsh`
 # The use of package `software-properties-common` is to 
 # add package directory using `add-apt-repository`
